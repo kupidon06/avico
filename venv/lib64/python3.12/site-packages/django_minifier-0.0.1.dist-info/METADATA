@@ -1,0 +1,78 @@
+Metadata-Version: 2.1
+Name: django-minifier
+Version: 0.0.1
+Summary: Django template minifier
+Home-page: https://github.com/realnoobs/django_minifier
+Author: Rizki Sasri Dwitama
+Author-email: sasri.project@gmail.com
+License: MIT
+Project-URL: Documentation, https://github.com/realnoobs/django_minifier
+Project-URL: Source, https://github.com/realnoobs/django_minifier
+Platform: UNKNOWN
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
+Classifier: Topic :: Internet :: WWW/HTTP :: WSGI
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Software Development :: Libraries :: Application Frameworks
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: Django (>=3.2.1)
+
+# Django Minifier
+
+Minify Django Template.
+
+Install:
+
+```shell
+pip install django_minifier
+```
+
+Add template loader
+
+```python
+# settings.py
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [
+            BASE_DIR / "example" / "templates"
+        ],
+        # "APP_DIRS": True, 
+        "OPTIONS": {
+            "context_processors": [
+                ...
+            ],
+            "loaders": [
+                (
+                    "django.template.loaders.cached.Loader",
+                    [
+                        "django_minifier.app_directories.Loader",
+                        "django_minifier.filesystem.Loader",
+                        "django_minifier.themes.Loader",
+                    ],
+                )
+            ],
+        },
+    },
+]
+
+TEMPLATE_MINIFIER = not DEBUG
+TEMPLATE_MINIFIER_EXCLUDED_DIRS = ("admin/", "wagtailadmin/")
+TEMPLATE_MINIFIER_FILENAME_EXTENSIONS = (".html", ".htm")
+TEMPLATE_MINIFIER_STRIP_FUNCTION = False
+
+```
+
+

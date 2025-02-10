@@ -1,0 +1,101 @@
+{% extends "layouts/base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container mx-auto py-10 px-4">
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">⚙️ Paramètres du Profil</h1>
+
+    <!-- Messages de succès ou d'erreur -->
+    {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+                <div class="p-4 mb-2 text-white rounded-lg {% if message.tags == 'success' %}bg-green-500{% else %}bg-red-500{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        <!-- Formulaire du Domaine -->
+        <form method="POST" class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 transition hover:shadow-2xl">
+            {% csrf_token %}
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white border-b pb-3 mb-6">🌐 Domaine</h2>
+            <div class="space-y-4">
+                {{ domain_form.as_p }}
+            </div>
+            <button type="submit" name="domain_submit" class="mt-6 w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition">
+                Mettre à jour le Domaine
+            </button>
+        </form>
+
+        <!-- Formulaire du Profil -->
+        <form method="POST" enctype="multipart/form-data" class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 transition hover:shadow-2xl">
+            {% csrf_token %}
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white border-b pb-3 mb-6">🏢 Profil de la Compagnie</h2>
+            <div class="space-y-4">
+                {{ profile_form.as_p }}
+            </div>
+            <button type="submit" name="profile_submit" class="mt-6 w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition">
+                Mettre à jour le Profil
+            </button>
+        </form>
+
+        <!-- Formulaire des Paiements -->
+        <form method="POST" class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 transition hover:shadow-2xl">
+            {% csrf_token %}
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white border-b pb-3 mb-6">💳 Intégration des Paiements</h2>
+            <div class="space-y-4">
+                {{ payment_form.as_p }}
+            </div>
+            <button type="submit" name="payment_submit" class="mt-6 w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition">
+                Mettre à jour les Paiements
+            </button>
+        </form>
+
+        <!-- Formulaire de Configuration Email -->
+        <form method="POST" class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 transition hover:shadow-2xl">
+            {% csrf_token %}
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white border-b pb-3 mb-6">📧 Configuration Email</h2>
+            <div class="space-y-4">
+                {{ email_form.as_p }}
+            </div>
+            <button type="submit" name="email_submit" class="mt-6 w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition">
+                Mettre à jour la Configuration Email
+            </button>
+        </form>
+    </div>
+
+    <!-- Applications Sociales -->
+    <div class="mt-10">
+        <h2 class="text-3xl font-semibold text-gray-900 dark:text-white mb-6">🔗 Applications Sociales</h2>
+        
+        {% for form in social_forms %}
+        <form method="POST" class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 transition hover:shadow-2xl mb-6">
+            {% csrf_token %}
+            <h3 class="text-xl font-medium text-gray-800 dark:text-white mb-4">⚡ {{ form.instance.name }}</h3>
+            <div class="space-y-4">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" name="social_submit_{{ form.instance.id }}" class="mt-4 w-full bg-yellow-600 text-white py-3 px-6 rounded-lg hover:bg-yellow-700 transition">
+                Mettre à jour {{ form.instance.name }}
+            </button>
+        </form>
+        {% empty %}
+        <p class="text-gray-700 dark:text-gray-300">Aucune application sociale configurée.</p>
+        {% endfor %}
+        
+        <!-- Formulaire pour Ajouter une Nouvelle Application Sociale -->
+        <form method="POST" class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 transition hover:shadow-2xl">
+            {% csrf_token %}
+            <h3 class="text-2xl font-medium text-gray-900 dark:text-white border-b pb-3 mb-6">➕ Ajouter une Nouvelle Application Sociale</h3>
+            <div class="space-y-4">
+                {{ new_social_form.as_p }}
+            </div>
+            <button type="submit" name="new_social_submit" class="mt-6 w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition">
+                Ajouter une Application Sociale
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
