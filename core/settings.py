@@ -183,10 +183,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 # 📂 Gestion des fichiers statiques et médias
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = "/var/www/myproject/media"
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = "/var/www/myproject/staticfiles" 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Répertoire 'static' de votre projet
+]
 
 # Multi-tenant File Storage
 DEFAULT_FILE_STORAGE = 'django_tenants.files.storage.TenantFileSystemStorage'
